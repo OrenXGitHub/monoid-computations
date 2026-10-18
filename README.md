@@ -119,14 +119,13 @@ construction identifies
 B M122 ~= Cof(S^3 -> S^2) ~= CP^2.
 ```
 
-The complete argument is given in `ANNULUS_CP2_PROOF.md`. The program
-`verify_annulus_cp2.py` checks all of its finite input: the two-object
-category, the simplicial annulus diagram, the frame and retract hypotheses,
-the identification of the framed endomorphism monoid with the table in
+The stand-alone argument is given in `ANNULUS_CP2_PROOF.md`; it cites published
+results rather than depending on the accompanying article. The program
+`verify_annulus_cp2.py` checks all of its finite input: the two-object category,
+the simplicial annulus diagram, the frame and retract hypotheses, the
+identification of the framed endomorphism monoid with the table in
 `annulus_cp2.py`, the deck-transformation cocycle, and its value `-1` on an
-explicit integral generator cycle. The proof note then applies standard
-results on classifying spaces of categories, homotopy colimits, and oriented
-circle bundles.
+explicit integral generator cycle.
 
 The separate script `annulus_cp2.py` computes cohomology rings over `F_2`,
 `F_3`, `F_5`, and `F_7`. Those computations are independent diagnostics, not
