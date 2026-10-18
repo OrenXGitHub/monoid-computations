@@ -69,13 +69,25 @@ The function `hopf_sphere_check` verifies this input using exact arithmetic:
 4. an integral cochain calculation evaluates the Hopf invariant of `|f|` on
    an oriented fundamental cycle and obtains `1`.
 
-Thus `|Y| ~= S^3` and `|f|` is a Hopf map. The construction produces
+Here is why these finite checks prove the asserted homotopy type. Since
+`pi_1(Y) = 0` and `H_2(Y; Z) = 0`, the Hurewicz theorem first gives
+`pi_2(Y) = 0`. Applied again in degree three, it identifies
+`pi_3(Y) -> H_3(Y; Z)` with an isomorphism. A map `S^3 -> |Y|` representing
+a generator is therefore an integral homology equivalence. Both spaces are
+simply connected CW complexes, so the homological Whitehead theorem makes it
+a homotopy equivalence. Hence `|Y| ~= S^3`. The computed Hopf invariant `1`
+then identifies `|f|: |Y| -> BL0 ~= S^2` with a Hopf map. The mapping-cone
+theorem proved in the paper now gives
+
+```text
+B M(Y,f) ~= Cof(|f|) ~= CP^2.
+```
+
+The construction produces
 
 ```text
 |M(Y,f)| = 35 + 4 * 5 * 88 = 1795,
 ```
-
-and the theorem in the paper gives `BM(Y,f) ~= CP^2`.
 
 The subsequent calculation of the mod-2 cohomology ring through degree 9 is
 an independent consistency check: it finds Betti numbers
@@ -87,13 +99,53 @@ an independent consistency check: it finds Betti numbers
 and a nonzero square of the degree-two class. This finite-range cohomology
 calculation is not being used as a substitute for the mapping-cone theorem.
 
+## The 122-element model of `CP^2`
+
+The file `annulus_cp2.py` constructs the multiplication table of a different
+122-element monoid `M122` with `B M122 ~= CP^2`. This homotopy equivalence is
+not inferred from the finite-range cohomology printed by the program. Its
+topological proof is as follows.
+
+The construction begins with a two-object diagram whose base has classifying
+space `S^2`. Its homotopy colimit maps to that base as an oriented circle
+fibration. On universal covers, one of the four composites of the chosen
+inclusions and retractions differs from the identity by one deck
+transformation. This says that the Euler class of the circle fibration is a
+generator of `H^2(S^2; Z)`. The total space is therefore `S^3`, and the map to
+`S^2` is the Hopf fibration. The categorical cofiber comparison used in the
+construction identifies
+
+```text
+B M122 ~= Cof(S^3 -> S^2) ~= CP^2.
+```
+
+The complete argument is given in `ANNULUS_CP2_PROOF.md`. The program
+`verify_annulus_cp2.py` checks all of its finite input: the two-object
+category, the simplicial annulus diagram, the frame and retract hypotheses,
+the identification of the framed endomorphism monoid with the table in
+`annulus_cp2.py`, the deck-transformation cocycle, and its value `-1` on an
+explicit integral generator cycle. The proof note then applies standard
+results on classifying spaces of categories, homotopy colimits, and oriented
+circle bundles.
+
+The separate script `annulus_cp2.py` computes cohomology rings over `F_2`,
+`F_3`, `F_5`, and `F_7`. Those computations are independent diagnostics, not
+the proof of the displayed homotopy equivalence. No minimality is claimed: the
+smallest possible order of a finite monoid `M` with `BM ~= CP^2` is open.
+
 ## Files
 
 - `cofiber_monoids.py` implements `M(Y,f)`, verifies the explicit simplicial
   Hopf sphere, and computes the stated mod-2 cohomology rings. Its largest
   example is the 1795-element monoid modeling `CP^2`.
-- `annulus_cp2.py` constructs a separate 122-element annulus monoid and
-  computes its cohomology rings over `F_2`, `F_3`, `F_5`, and `F_7`.
+- `annulus_cp2.py` constructs the 122-element monoid with classifying space
+  homotopy equivalent to `CP^2` and computes diagnostic cohomology rings over
+  `F_2`, `F_3`, `F_5`, and `F_7`.
+- `verify_annulus_cp2.py` performs the exact finite checks used in the proof
+  of the 122-element model, including equality with the table constructed by
+  `annulus_cp2.py` and the integral Euler-cocycle calculation.
+- `ANNULUS_CP2_PROOF.md` gives the categorical and topological proof that
+  those checks imply `B M122 ~= CP^2`.
 - `check_cp2_corners.py` checks left- and right-collapsing idempotent criteria
   and proper idempotent corners of the 122- and 1795-element models. It emits
   a machine-readable JSON report.
@@ -129,7 +181,7 @@ On Windows, replace the activation command by:
 ## Run the checks
 
 The cohomology and corner calculations are substantially heavier than the
-initial construction and exact Hopf-sphere verification.
+exact Hopf-sphere and annulus verifications.
 
 ### Mapping-cone examples and the 1795-element `CP^2` model
 
@@ -140,7 +192,18 @@ python cofiber_monoids.py
 The final report should give oriented Hopf invariant `1`, the mod-2 Betti
 numbers displayed above, and a nonzero square in degree four.
 
-### The 122-element annulus model
+### The 122-element `CP^2` model
+
+Run the exact input verification for the proof:
+
+```bash
+python verify_annulus_cp2.py
+```
+
+It checks the finite hypotheses in `ANNULUS_CP2_PROOF.md` and should finish
+with `All finite hypotheses in ANNULUS_CP2_PROOF.md passed.`
+
+For the independent cohomology diagnostics, run:
 
 ```bash
 python annulus_cp2.py
@@ -149,7 +212,9 @@ python annulus_cp2.py
 The first line should report `|M| = 122` and confirm that multiplication is
 associative and unital. For each of the four primes, the reported Betti
 numbers begin `1, 0, 1, 0, 1`, with a nonzero product from degree two to
-degree four.
+degree four. This agrees with `CP^2` but is not, by itself, a proof of the
+homotopy equivalence; the proof is the circle-fibration and cofiber argument
+above.
 
 ### Idempotent-corner checks
 
@@ -188,7 +253,7 @@ Thus none of these monoids has the second homology required by
 
 ## Quick check
 
-Without running the expensive calculations, check the syntax of all four
+Without running the expensive calculations, check the syntax of all five
 programs with
 
 ```bash
