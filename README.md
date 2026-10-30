@@ -1,5 +1,7 @@
 # Computational supplement to *On a conjecture of Fiedorowicz*
 
+> **Article:** [Oren Ben-Bassat, *On a conjecture of Fiedorowicz* (arXiv:2610.38760)](https://arxiv.org/abs/2610.38760)
+
 This repository contains reproducible Python calculations accompanying Oren
 Ben-Bassat's paper *On a conjecture of Fiedorowicz*. The paper proves that
 every finite simply connected CW complex is homotopy equivalent to the
@@ -263,7 +265,7 @@ python -m py_compile *.py
 
 If you use these programs, please cite the accompanying paper:
 
-> Oren Ben-Bassat, *On a conjecture of Fiedorowicz*, preprint.
+> Oren Ben-Bassat, [*On a conjecture of Fiedorowicz*](https://arxiv.org/abs/2610.38760), arXiv:2610.38760.
 
 ## License
 
